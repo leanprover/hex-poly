@@ -1,6 +1,11 @@
 name = "hex-poly-bench"
 defaultTargets = ["hexpoly_bench"]
 
+leanOptions = [
+  { name = "doc.verso", value = true },
+  { name = "doc.verso.suggestions", value = false },
+]
+
 [[require]]
 name = "HexPoly"
 path = ".."

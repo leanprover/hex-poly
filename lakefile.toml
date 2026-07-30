@@ -1,5 +1,10 @@
 name = "hex-poly"
 defaultTargets = ["HexPoly"]
 
+leanOptions = [
+  { name = "doc.verso", value = true },
+  { name = "doc.verso.suggestions", value = false },
+]
+
 [[lean_lib]]
 name = "HexPoly"
