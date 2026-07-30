@@ -1,0 +1,5 @@
+name = "hex-poly"
+defaultTargets = ["HexPoly"]
+
+[[lean_lib]]
+name = "HexPoly"

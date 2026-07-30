@@ -1,0 +1,19 @@
+name = "hex-poly-conformance"
+defaultTargets = ["HexPolyConformance"]
+
+[[require]]
+name = "HexPoly"
+path = ".."
+
+[[require]]
+name = "hex-test-kit"
+git = "https://github.com/leanprover/hex-test-kit.git"
+rev = "610207eec0ca214928eec42a6dd2084d859bf94d"
+
+[[lean_lib]]
+name = "HexPolyConformance"
+globs = ["HexPoly.Conformance"]
+
+[[lean_exe]]
+name = "hexpoly_emit_fixtures"
+root = "HexPoly.EmitFixtures"
