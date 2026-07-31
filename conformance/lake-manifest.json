@@ -1,23 +1,30 @@
-{"version": "1.2.0",
- "packagesDir": ".lake/packages",
- "packages":
- [{"url": "https://github.com/leanprover/hex-test-kit.git",
-   "type": "git",
-   "subDir": null,
-   "scope": "",
-   "rev": "610207eec0ca214928eec42a6dd2084d859bf94d",
-   "name": "«hex-test-kit»",
-   "manifestFile": "lake-manifest.json",
-   "inputRev": "610207eec0ca214928eec42a6dd2084d859bf94d",
-   "inherited": false,
-   "configFile": "lakefile.toml"},
-  {"type": "path",
-   "scope": "",
-   "name": "HexPoly",
-   "manifestFile": "lake-manifest.json",
-   "inherited": false,
-   "dir": "..",
-   "configFile": "lakefile.toml"}],
- "name": "«hex-poly-conformance»",
- "lakeDir": ".lake",
- "fixedToolchain": false}
+{
+  "version": "1.2.0",
+  "packagesDir": ".lake/packages",
+  "packages": [
+    {
+      "url": "https://github.com/leanprover/hex-test-kit.git",
+      "type": "git",
+      "subDir": null,
+      "scope": "",
+      "rev": "85ab4582fbe0d86bb38f5429b17b9154fede75f0",
+      "name": "\u00abhex-test-kit\u00bb",
+      "manifestFile": "lake-manifest.json",
+      "inputRev": "85ab4582fbe0d86bb38f5429b17b9154fede75f0",
+      "inherited": false,
+      "configFile": "lakefile.toml"
+    },
+    {
+      "type": "path",
+      "scope": "",
+      "name": "HexPoly",
+      "manifestFile": "lake-manifest.json",
+      "inherited": false,
+      "dir": "..",
+      "configFile": "lakefile.toml"
+    }
+  ],
+  "name": "\u00abhex-poly-conformance\u00bb",
+  "lakeDir": ".lake",
+  "fixedToolchain": false
+}
