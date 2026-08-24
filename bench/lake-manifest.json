@@ -19,10 +19,10 @@
       "type": "git",
       "subDir": null,
       "scope": "",
-      "rev": "26e3c46c6263b741a6e1fdaf5e5fc03832ec5b79",
+      "rev": "5b3dc5d7789cb680d64f8f4046254f93b7424e4f",
       "name": "\u00abhex-test-kit\u00bb",
       "manifestFile": "lake-manifest.json",
-      "inputRev": "26e3c46c6263b741a6e1fdaf5e5fc03832ec5b79",
+      "inputRev": "5b3dc5d7789cb680d64f8f4046254f93b7424e4f",
       "inherited": false,
       "configFile": "lakefile.toml"
     },
