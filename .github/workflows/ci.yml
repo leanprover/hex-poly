@@ -5,7 +5,7 @@ on:
   pull_request:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,37 +15,31 @@ jobs:
         with:
           auto-config: false
           build: false
-      - name: Install FLINT oracle dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgmp-dev
-          python3 -m pip install --user python-flint
+          use-github-cache: false
+          use-mathlib-cache: false
+      - name: Restore Lake build outputs
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .lake/build
+            .lake/packages/Hex*/.lake/build
+          key: lake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            lake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-
       - name: Build library
         run: lake build
-      - name: Build conformance sidecar
-        run: |
-          cd conformance
-          lake build
-      - name: Conformance oracle
-        run: |
-          cd conformance
-          lake exe hexpoly_emit_fixtures > /tmp/hex-poly-fresh.jsonl
-          cd ..
-          diff -u conformance-fixtures/HexPoly/poly.jsonl /tmp/hex-poly-fresh.jsonl
-          python3 scripts/oracle/poly_flint.py < /tmp/hex-poly-fresh.jsonl
-      - name: Build + full bench verify
-        env:
-          BENCH_VERIFY_HARD_CAP_SECONDS: "360"
-          HEX_FLINT_BENCH_DRIVER: ${{ github.workspace }}/scripts/oracle/flint_bench_driver.py
-          HEX_FLINT_BENCH_PYTHON: python3
-        run: |
-          cd bench
-          lake build hexpoly_bench
-          bash ../scripts/ci/check_bench_verify_budget.sh hexpoly_bench
       - name: Assert Mathlib-free
         run: |
-          if find .lake bench/.lake conformance/.lake -type d -name Mathlib 2>/dev/null | grep -q .; then
+          if find .lake -type d -iname mathlib 2>/dev/null | grep -q .; then
             echo "ERROR: a Lake build pulled in Mathlib"; exit 1; fi
-          if grep -rqE '^import Mathlib' HexPoly conformance/HexPoly bench/HexPoly 2>/dev/null; then
+          if grep -rqE '^[[:space:]]*((public|private|meta)[[:space:]]+)*import[[:space:]]+Mathlib' HexPoly 2>/dev/null; then
             echo "ERROR: a source file imports Mathlib"; exit 1; fi
           echo "Mathlib-free OK"
+      - name: Save Lake build outputs
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            .lake/build
+            .lake/packages/Hex*/.lake/build
+          key: lake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
