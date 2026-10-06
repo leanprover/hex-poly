@@ -8,3 +8,7 @@ leanOptions = [
 
 [[lean_lib]]
 name = "HexPoly"
+
+[[lean_lib]]
+name = "HexPolyTests"
+globs = ["HexPoly.InterpretTests", "HexPoly.PseudoTests"]

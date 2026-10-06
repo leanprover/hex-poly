@@ -26,8 +26,8 @@ jobs:
           key: lake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: |
             lake-build-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}-
-      - name: Build library
-        run: lake build
+      - name: Build library and release regressions
+        run: lake build HexPoly HexPolyTests
       - name: Assert Mathlib-free
         run: |
           if find .lake -type d -iname mathlib 2>/dev/null | grep -q .; then
